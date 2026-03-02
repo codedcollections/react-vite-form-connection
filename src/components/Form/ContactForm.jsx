@@ -1,5 +1,5 @@
-import { useState } from "react"
-import { sendRSVP } from "../../api"
+import { useEffect, useState } from "react"
+import { onRSVPS, sendRSVP } from "../../api"
 
 function ContactForm() {
   const [form, setForm] = useState({
@@ -8,7 +8,11 @@ function ContactForm() {
     message: "",
     website: "",
   })
+  const [rsvps, setRsvps] = useState([])
 
+  useEffect(() => {
+    onRSVPS("1234", setRsvps)
+  }, [])
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -39,29 +43,37 @@ function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="name">name:</label>
-      <input name="name" id="name" onChange={handleChange} required />
-      <br />
-      <label htmlFor="email">email:</label>
-      <input
-        name="email"
-        id="email"
-        type="email"
-        onChange={handleChange}
-        required
-      />{" "}
-      <br />
-      <label htmlFor="message">message:</label>
-      <textarea name="message" id="message" onChange={handleChange} required />
-      <input
-        type="text"
-        name="website"
-        style={{ display: "none" }}
-        onChange={handleChange}
-      />
-      <button type="submit">Send</button>
-    </form>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="name">name:</label>
+        <input name="name" id="name" onChange={handleChange} required />
+        <br />
+        <label htmlFor="email">email:</label>
+        <input
+          name="email"
+          id="email"
+          type="email"
+          onChange={handleChange}
+          required
+        />{" "}
+        <br />
+        <label htmlFor="message">message:</label>
+        <textarea
+          name="message"
+          id="message"
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="website"
+          style={{ display: "none" }}
+          onChange={handleChange}
+        />
+        <button type="submit">Send</button>
+      </form>
+      <pre>{JSON.stringify(rsvps, null, 2)}</pre>
+    </div>
   )
 }
 
