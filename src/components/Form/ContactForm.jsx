@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { sendRSVP } from "../../api"
 
 function ContactForm() {
   const [form, setForm] = useState({
@@ -21,7 +22,9 @@ function ContactForm() {
     }
     e.preventDefault()
 
-    await fetch(
+    await sendRSVP(form)
+
+    /* await fetch(
       "https://script.google.com/macros/s/AKfycbxrLhmXXowA7BzPDqo8jhsVKdhpP8rHe5SiC6Zy48bSTzXwkcFslLZom5OXMSef3mrR/exec",
       {
         method: "POST",
@@ -30,7 +33,7 @@ function ContactForm() {
           "Content-Type": "application/json",
         },
       },
-    )
+    ) */
 
     alert("Form submitted!")
   }
